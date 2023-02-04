@@ -1,0 +1,11 @@
+# =======================================================
+# crontab file for launching the script for collecting 
+# XML statistics from the bind TCP statistics socket
+# =======================================================
+# (C) 2023 khodnev@gmail.com 
+# https://github.com/khodnev/bind-to-zabbix-collection
+# =======================================================
+
+* * * * * /etc/zabbix/get_bind_metrics_for_zabbix.sh
+* * * * * ( sleep 30; /etc/zabbix/get_bind_metrics_for_zabbix.sh )
+

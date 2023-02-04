@@ -1,0 +1,1528 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-02-04T22:10:41Z'
+  groups:
+    -
+      uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    -
+      uuid: 46f70f725f984772a523bb27d9188689
+      template: DNS-bind
+      name: DNS-bind
+      description: |
+        # ===============================
+        # Overview 
+        # ===============================
+        # Requirements
+        # Bind Server 9 and above  
+        # Zabbix Server 6+ and above  
+        # Zabbix Agent 2 on monitored host  
+          
+        # ===============================
+        # How it works
+        # Include statistics in named.conf:
+          
+        statistics-channels {  
+         inet 127.0.0.1 port 8053 allow { 127.0.0.1; };  
+         };
+        
+        # Include - bind.conf in /etc/zabbix/zabbix_agent2.d/plugins.d/
+        # bind.conf:
+        UserParameter=bind.server[*],cat /tmp/bind_metrics.out | grep -A1 "/statistics/server/counters/counter/@name=$1$" | tail -1 | cut -d= -f2 
+        UserParameter=bind.views[*],cat /tmp/bind_metrics.out | grep -A1 "/statistics/views/view/counters/counter/@name=$1$" | tail -1 | cut -d= -f2  
+        
+        # Put script get_bind_metrics_for_zabbix.sh in /etc/zabbix/ and
+        # set run it from cron onse every 30 seconds
+        
+        * * * * * /etc/zabbix/get_bind_metrics_for_zabbix.sh  
+        * * * * * ( sleep 30; /etc/zabbix/get_bind_metrics_for_zabbix.sh )  
+        # ===============================
+        # (C) 2023 khodnev@gmail.com
+        # https://github.com/khodnev/bind-to-zabbix-collection
+        # ===============================
+      groups:
+        -
+          name: Templates
+      items:
+        -
+          uuid: ad2a4704243049c4bd212fd9d86b2be8
+          name: 'Request query type AAAA'
+          key: 'bind.server[AAAA]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 612f7ccc1205487384434d2fda1eac48
+          name: 'Request query type ANY'
+          key: 'bind.server[ANY]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: f46c45aba6604e7681e1b0a8957df29a
+          name: 'Request query type AXFR'
+          key: 'bind.server[AXFR]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 9f09d9d5a7d84d24884e729608b25809
+          name: 'Request query type A'
+          key: 'bind.server[A]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 2595aa9c06d7415397f9afdeb5b40bed
+          name: 'Request query type CNAME'
+          key: 'bind.server[CNAME]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 6f7802d9f9b74565a49cc8460a0e0891
+          name: 'Request query type DNSKEY'
+          key: 'bind.server[DNSKEY]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 702cd8037a1b4f6abaf41c1ce24acab3
+          name: 'Request query type MX'
+          key: 'bind.server[MX]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 6f7a2f8e217345758edbb18f831dd8fb
+          name: 'Response code NOERROR'
+          key: 'bind.server[NOERROR]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 5c8dc7bb6d034951bb24ed44646770a3
+          name: 'Request query type NS'
+          key: 'bind.server[NS]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: cbb7eaa6f8c94ec68bc0c3747d16a4c6
+          name: 'Response code NXDOMAIN'
+          key: 'bind.server[NXDOMAIN]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: e493dcfb6ab04a8db8e15d3b4e69c781
+          name: 'Request query type PTR'
+          key: 'bind.server[PTR]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a586e42aab144696adfe97b51d8e7ecc
+          name: 'Network statistics QryAuthAns'
+          key: 'bind.server[QryAuthAns]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a510a0304b094fe8bf1116275266be0a
+          name: 'Network statistics QryDropped'
+          key: 'bind.server[QryDropped]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 60e692b4f6b6451daa53c1a61156c238
+          name: 'Network statistics QryDuplicate'
+          key: 'bind.server[QryDuplicate]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 6d81ce0a369e483aa3645b5c539e90f0
+          name: 'Network statistics QryFailure'
+          key: 'bind.server[QryFailure]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: b3ca13add44f45a9ba5a314a69432de7
+          name: 'Network statistics QryNoauthAns'
+          key: 'bind.server[QryNoauthAns]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: c67e1b0718d14c32b67fe5d3f9733e4b
+          name: 'Network statistics QryNXDOMAIN'
+          key: 'bind.server[QryNXDOMAIN]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 9351c658577e4c46807c83db2c2b293a
+          name: 'Network statistics QryNxrrset'
+          key: 'bind.server[QryNxrrset]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 05566572dede44cc9bc2067e3bce8fd6
+          name: 'Network statistics QryRecursion'
+          key: 'bind.server[QryRecursion]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: d830359eabc346338125dca40eabacba
+          name: 'Network statistics QryReferral'
+          key: 'bind.server[QryReferral]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 512bbfc1589f4a70b3478a3bc213a63f
+          name: 'Network statistics QrySERVFAIL'
+          key: 'bind.server[QrySERVFAIL]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 08bf0e14be254732ace5c2852bf14b89
+          name: 'Network statistics QrySuccess'
+          key: 'bind.server[QrySuccess]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 58049a8b501f4c8e958a1a4ed2c2cf55
+          name: 'Network statistics QryTCP'
+          key: 'bind.server[QryTCP]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: e68faddd41364916b589f5fd7506e0f4
+          name: 'Network statistics QryUDP'
+          key: 'bind.server[QryUDP]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: f049bf7a9156409c8dc79165af0e1008
+          name: 'Operational code QUERY'
+          key: 'bind.server[QUERY]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 16f784651e9742728afcb318fa3c3989
+          name: 'Network statistics RecursClients'
+          key: 'bind.server[RecursClients]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 585428e68d0746f88c26bd0f556f0f85
+          name: 'Response code REFUSED'
+          key: 'bind.server[REFUSED]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: e28c68b5de4444dda16f40bce04b5029
+          name: 'Network statistics ReqEdns0'
+          key: 'bind.server[ReqEdns0]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 3d7d47d8b1204e9c8e783aca69afe42e
+          name: 'Network statistics RespEDNS0'
+          key: 'bind.server[ReqTCP]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 1b2a845a3af34384af012e4436e06051
+          name: 'Network statistics Requestv4'
+          key: 'bind.server[Requestv4]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: dba31065aa824bdeab702948e025f5ca
+          name: 'Network statistics RespEDNS0'
+          key: 'bind.server[RespEDNS0]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 1be4b6899cf4438e9a1b88db1d4bf5b9
+          name: 'Network statistics Response'
+          key: 'bind.server[Response]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 4d4a8595a0bd426a82ae39cf5658716a
+          name: 'Request query type RRSIG'
+          key: 'bind.server[RRSIG]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: ba52e34d7b2b41859977782da0c2afb9
+          name: 'Response code SERVFAIL'
+          key: 'bind.server[SERVFAIL]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 4030acb0b80741c2a09744ae93e14fcc
+          name: 'Request query type SOA'
+          key: 'bind.server[SOA]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: ab32011ececf4f7ba38240acf4b9e18b
+          name: 'Request query type SPF'
+          key: 'bind.server[SPF]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 3814f5e3ed294b90a212d7bde7e5093a
+          name: 'Request query type SRV'
+          key: 'bind.server[SRV]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: f953dc69c2f3470a89e9be9deea6fc81
+          name: 'Socket statistics TCP4Accept'
+          key: 'bind.server[TCP4Accept]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a534b2c6bd2740bfb55a935a8ff1a0ac
+          name: 'Socket statistics TCP4Active'
+          key: 'bind.server[TCP4Active]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 1a2bbc3988ce47b1a677083784968253
+          name: 'Socket statistics TCP4Close'
+          key: 'bind.server[TCP4Close]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 0f7a709701e944719157c734cd833793
+          name: 'Socket statistics TCP4Conn'
+          key: 'bind.server[TCP4Conn]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 75fee07bf3eb44f18a77cedcd5d0bfcd
+          name: 'Socket statistics TCP4Open'
+          key: 'bind.server[TCP4Open]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a4aac6fe885741f0b065ffcdd8aa6b96
+          name: 'Request query type TXT'
+          key: 'bind.server[TXT]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a59d0c363922474993bb143cd8ba373c
+          name: 'Request query type TYPE65'
+          key: 'bind.server[TYPE65]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 5c8823205e9c4764bef56772928b5a91
+          name: 'Socket statistics UDP4Active'
+          key: 'bind.server[UDP4Active]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: f71547c7e1394ff3aa6a8d2b883ab665
+          name: 'Socket statistics UDP4Close'
+          key: 'bind.server[UDP4Close]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: e90f7d9992784c06aeefd6fc3c3afbac
+          name: 'Socket statistics UDP4Conn'
+          key: 'bind.server[UDP4Conn]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 1e3d6e85cd0a487e90b7a6a8faeea3e7
+          name: 'Socket statistics UDP4Open'
+          key: 'bind.server[UDP4Open]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 131b2e044c4d497d827259c49f76cf44
+          name: 'Network statistics Prefetch'
+          key: 'bind.server[]'
+          delay: '30'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: STR_REPLACE
+              parameters:
+                - '""'
+                - '0'
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 3c467648402a4e67a8bd41b27e988deb
+          name: 'Response query type AAAA'
+          key: 'bind.views[AAAA]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 0ad7e7b0616441d89b5f07bfe2f430b8
+          name: 'Response query type ANY'
+          key: 'bind.views[ANY]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: d212c383f11a46c39a59ef63e2631271
+          name: 'Response query type AXFR'
+          key: 'bind.views[AXFR]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 63bd89dba5d54c9e83ea6618dac27bf9
+          name: 'Response query type A'
+          key: 'bind.views[A]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: a681b39b79f14845985046bf188fe374
+          name: 'Response query type CNAME'
+          key: 'bind.views[CNAME]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: d3d649c55f074116895ce3b23484a554
+          name: 'Response query type DNSKEY'
+          key: 'bind.views[DNSKEY]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 8d1628d43ab04539b7687a0e9d6d551b
+          name: 'Response query type MX'
+          key: 'bind.views[MX]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: fc4ac3000c1c4821ac9451fdea080aa4
+          name: 'Response query type NS'
+          key: 'bind.views[NS]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: c78a6edfa47b4d64b17f29f2753f16bf
+          name: 'Response query type PTR'
+          key: 'bind.views[PTR]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: c2896a166ab640728476f5c5fe224f93
+          name: 'Response query type RRSIG'
+          key: 'bind.views[RRSIG]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 7f5fb1c944d14cfe9b073a70493aebdf
+          name: 'Response query type SOA'
+          key: 'bind.views[SOA]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: b664ea55b37e43d587c7da60eb854d14
+          name: 'Response query type SPF'
+          key: 'bind.views[SPF]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: d9b1c9c4277043e3ba0d3a893384b466
+          name: 'Response query type SRV'
+          key: 'bind.views[SRV]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: 85991cbfadc04e7fa76c793dba86cbd4
+          name: 'Response query type TXT'
+          key: 'bind.views[TXT]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+        -
+          uuid: b16bd11eb16a4754894356c2f7e5c599
+          name: 'Response query type TYPE65'
+          key: 'bind.views[TYPE65]'
+          delay: '30'
+          trends: 120d
+          preprocessing:
+            -
+              type: SIMPLE_CHANGE
+              parameters:
+                - ''
+          tags:
+            -
+              tag: Application
+              value: DNS
+      tags:
+        -
+          tag: class
+          value: application
+        -
+          tag: target
+          value: bind
+      dashboards:
+        -
+          uuid: b7c49e01e42241df89346627df0cd4fc
+          name: 'DNS Queries'
+          pages:
+            -
+              widgets:
+                -
+                  type: GRAPH_CLASSIC
+                  width: '12'
+                  height: '8'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        host: DNS-bind
+                        name: 'Request queries'
+                -
+                  type: GRAPH_CLASSIC
+                  x: '12'
+                  width: '12'
+                  height: '8'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        host: DNS-bind
+                        name: 'Response queries'
+                -
+                  type: GRAPH_CLASSIC
+                  'y': '8'
+                  width: '12'
+                  height: '8'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        host: DNS-bind
+                        name: 'Network statistics'
+                -
+                  type: GRAPH_CLASSIC
+                  x: '12'
+                  'y': '8'
+                  width: '12'
+                  height: '8'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        host: DNS-bind
+                        name: 'Socket statistics'
+                -
+                  type: GRAPH_CLASSIC
+                  'y': '16'
+                  width: '12'
+                  height: '6'
+                  fields:
+                    -
+                      type: GRAPH
+                      name: graphid
+                      value:
+                        host: DNS-bind
+                        name: 'Operational and Response codes'
+  graphs:
+    -
+      uuid: 771f7b950a964123a3e837c0381f984d
+      name: 'Network statistics'
+      graph_items:
+        -
+          color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryAuthAns]'
+        -
+          sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryDropped]'
+        -
+          sortorder: '2'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryDuplicate]'
+        -
+          sortorder: '3'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryFailure]'
+        -
+          sortorder: '4'
+          color: A54F10
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryNoauthAns]'
+        -
+          sortorder: '5'
+          color: FC6EA3
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryNXDOMAIN]'
+        -
+          sortorder: '6'
+          color: 6C59DC
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryNxrrset]'
+        -
+          sortorder: '7'
+          color: AC8C14
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryRecursion]'
+        -
+          sortorder: '8'
+          color: 611F27
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryReferral]'
+        -
+          sortorder: '9'
+          color: F230E0
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QrySERVFAIL]'
+        -
+          sortorder: '10'
+          color: 5CCD18
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QrySuccess]'
+        -
+          sortorder: '11'
+          color: BB2A02
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryTCP]'
+        -
+          sortorder: '12'
+          color: 5A2B57
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QryUDP]'
+        -
+          sortorder: '13'
+          color: 89ABF8
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[RecursClients]'
+        -
+          sortorder: '14'
+          color: 7EC25C
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[ReqEdns0]'
+        -
+          sortorder: '15'
+          color: 2B5429
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[Requestv4]'
+        -
+          sortorder: '16'
+          color: 8048B4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[ReqTCP]'
+        -
+          sortorder: '17'
+          color: FD5434
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[RespEDNS0]'
+        -
+          sortorder: '18'
+          color: 790E1F
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[Response]'
+    -
+      uuid: 4a1b67603504415aa7a809120723f429
+      name: 'Operational and Response codes'
+      graph_items:
+        -
+          color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[QUERY]'
+        -
+          sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[NOERROR]'
+        -
+          sortorder: '2'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[NXDOMAIN]'
+        -
+          sortorder: '3'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[REFUSED]'
+        -
+          sortorder: '4'
+          color: A54F10
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[SERVFAIL]'
+    -
+      uuid: 276cdc4bedaf49718f33f04cafb280c6
+      name: 'Request queries'
+      graph_items:
+        -
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: DNS-bind
+            key: 'bind.server[A]'
+        -
+          sortorder: '1'
+          drawtype: BOLD_LINE
+          color: 00C800
+          item:
+            host: DNS-bind
+            key: 'bind.server[AAAA]'
+        -
+          sortorder: '2'
+          color: 0000C8
+          item:
+            host: DNS-bind
+            key: 'bind.server[CNAME]'
+        -
+          sortorder: '3'
+          drawtype: BOLD_LINE
+          color: C800C8
+          item:
+            host: DNS-bind
+            key: 'bind.server[MX]'
+        -
+          sortorder: '4'
+          color: 00C8C8
+          item:
+            host: DNS-bind
+            key: 'bind.server[NS]'
+        -
+          sortorder: '5'
+          color: C8C800
+          item:
+            host: DNS-bind
+            key: 'bind.server[PTR]'
+        -
+          sortorder: '6'
+          drawtype: DASHED_LINE
+          color: C8C8C8
+          item:
+            host: DNS-bind
+            key: 'bind.server[SPF]'
+        -
+          sortorder: '7'
+          drawtype: DASHED_LINE
+          color: '960000'
+          item:
+            host: DNS-bind
+            key: 'bind.server[TXT]'
+        -
+          sortorder: '8'
+          item:
+            host: DNS-bind
+            key: 'bind.server[ANY]'
+        -
+          sortorder: '9'
+          color: '000000'
+          item:
+            host: DNS-bind
+            key: 'bind.server[SOA]'
+        -
+          sortorder: '10'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[AXFR]'
+        -
+          sortorder: '11'
+          color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[DNSKEY]'
+        -
+          sortorder: '12'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[RRSIG]'
+        -
+          sortorder: '13'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[SRV]'
+        -
+          sortorder: '14'
+          color: A54F10
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TYPE65]'
+    -
+      uuid: f68fb68cb9d348a0b6a5e318ad8c5a31
+      name: 'Response queries'
+      graph_items:
+        -
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: DNS-bind
+            key: 'bind.views[A]'
+        -
+          sortorder: '1'
+          drawtype: BOLD_LINE
+          color: 00C800
+          item:
+            host: DNS-bind
+            key: 'bind.views[AAAA]'
+        -
+          sortorder: '2'
+          color: 0000C8
+          item:
+            host: DNS-bind
+            key: 'bind.views[CNAME]'
+        -
+          sortorder: '3'
+          drawtype: BOLD_LINE
+          color: C800C8
+          item:
+            host: DNS-bind
+            key: 'bind.views[MX]'
+        -
+          sortorder: '4'
+          color: 00C8C8
+          item:
+            host: DNS-bind
+            key: 'bind.views[NS]'
+        -
+          sortorder: '5'
+          color: C8C800
+          item:
+            host: DNS-bind
+            key: 'bind.views[PTR]'
+        -
+          sortorder: '6'
+          drawtype: DASHED_LINE
+          color: C8C8C8
+          item:
+            host: DNS-bind
+            key: 'bind.views[SPF]'
+        -
+          sortorder: '7'
+          drawtype: DASHED_LINE
+          color: '960000'
+          item:
+            host: DNS-bind
+            key: 'bind.views[TXT]'
+        -
+          sortorder: '8'
+          item:
+            host: DNS-bind
+            key: 'bind.views[ANY]'
+        -
+          sortorder: '9'
+          color: '000000'
+          item:
+            host: DNS-bind
+            key: 'bind.views[SOA]'
+        -
+          sortorder: '10'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.views[AXFR]'
+        -
+          sortorder: '11'
+          color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.views[DNSKEY]'
+        -
+          sortorder: '12'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.views[RRSIG]'
+        -
+          sortorder: '13'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.views[SRV]'
+        -
+          sortorder: '14'
+          color: A54F10
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.views[TYPE65]'
+    -
+      uuid: afbf3dd2a6434e8b8bd71a50f880634d
+      name: 'Socket statistics'
+      graph_items:
+        -
+          color: 1A7C11
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TCP4Accept]'
+        -
+          sortorder: '1'
+          color: '274482'
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TCP4Active]'
+        -
+          sortorder: '2'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TCP4Close]'
+        -
+          sortorder: '3'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TCP4Conn]'
+        -
+          sortorder: '4'
+          color: A54F10
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[TCP4Open]'
+        -
+          sortorder: '5'
+          color: FC6EA3
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[UDP4Active]'
+        -
+          sortorder: '6'
+          color: 6C59DC
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[UDP4Close]'
+        -
+          sortorder: '7'
+          color: AC8C14
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[UDP4Conn]'
+        -
+          sortorder: '8'
+          color: 611F27
+          calc_fnc: ALL
+          item:
+            host: DNS-bind
+            key: 'bind.server[UDP4Open]'
