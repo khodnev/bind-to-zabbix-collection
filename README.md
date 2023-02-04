@@ -51,7 +51,7 @@ There are no discovery rules in this template.
 
 ## Items collected
 
-See items.md
+[See](items.md)
 
 ## Triggers
 
