@@ -53,5 +53,4 @@ There are no discovery rules in this template.
 
 ## Triggers
 
-There are no triggers in this template.
-
+Triggers coming soon
