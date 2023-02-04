@@ -1,60 +1,60 @@
-opcode:
-  QUERY
+- opcode:
+  - QUERY
 
-rcode:
-  NOERROR
-  SERVFAIL
-  NXDOMAIN
-  REFUSED
+- rcode:
+  - NOERROR
+  - SERVFAIL
+  - NXDOMAIN
+  - REFUSED
 
-qtype: and resqtype:
-  A
-  AAAA
-  ANY
-  AXFR
-  CNAME
-  DNSKEY
-  MX 
-  NS 
-  PTR 
-  RRSIG 
-  SOA 
-  SPF 
-  SRV 
-  TXT 
-  TYPE65
+- qtype: and resqtype:
+  - A
+  - AAAA
+  - ANY
+  - AXFR
+  - CNAME
+  - DNSKEY
+  - MX 
+  - NS 
+  - PTR 
+  - RRSIG 
+  - SOA 
+  - SPF 
+  - SRV 
+  - TXT 
+  - TYPE65
 
-nsstat:
-  Requestv4
-  Response
-  ReqEdns0
-  RespEDNS0
-  ReqTCP
-  RespEDNS0
-  QrySuccess
-  QryAuthAns
-  QryNoauthAns
-  QryReferral
-  QryNxrrset
-  QrySERVFAIL
-  QryNXDOMAIN
-  QryRecursion
-  QryDuplicate
-  QryDropped
-  QryFailure
-  RecursClients
-  QryUDP
-  QryTCP
-  Prefetch
+- nsstat:
+  - Requestv4
+  - Response
+  - ReqEdns0
+  - RespEDNS0
+  - ReqTCP
+  - RespEDNS0
+  - QrySuccess
+  - QryAuthAns
+  - QryNoauthAns
+  - QryReferral
+  - QryNxrrset
+  - QrySERVFAIL
+  - QryNXDOMAIN
+  - QryRecursion
+  - QryDuplicate
+  - QryDropped
+  - QryFailure
+  - RecursClients
+  - QryUDP
+  - QryTCP
+  - Prefetch
 
-sockstat:
-  UDP4Open
-  TCP4Open
-  UDP4Close
-  TCP4Close
-  UDP4Conn
-  TCP4Conn
-  TCP4Accept
-  UDP4Active
-  TCP4Active
+- sockstat:
+  - UDP4Open
+  - TCP4Open
+  - UDP4Close
+  - TCP4Close
+  - UDP4Conn
+  - TCP4Conn
+  - TCP4Accept
+  - UDP4Active
+  - TCP4Active
 
