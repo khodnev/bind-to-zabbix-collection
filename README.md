@@ -13,7 +13,7 @@ Redesigned to take into account the fact that with each request there is a call 
 Created a script that runs as a cron job every 30 seconds.
 This script pulls the socket once every 30 seconds, saves the output to an XML file and then cleans the output, reducing it by several tens of times.
 
-Put script [get_bind_metrics_for_zabbix.sh](get_bind_metrics_for_zabbix.sh) in /etc/zabbix/ and set run it from cron onse every 30 seconds
+Put script [get_bind_metrics_for_zabbix.sh](get_bind_metrics_for_zabbix.sh) in /etc/zabbix/ and set run it from cron onse every 30 seconds. [See example](crontab_root).
 
 ```
 * * * * * /etc/zabbix/get_bind_metrics_for_zabbix.sh
