@@ -28,7 +28,7 @@ statistics-channels {
  };
 ```
 
-Include - [bind.conf](bind.conf) in /etc/zabbix/zabbix_agent2.d/plugins.d/
+Put [bind.conf](bind.conf) in /etc/zabbix/zabbix_agent2.d/plugins.d/
 
 ```
 UserParameter=bind.server[*],cat /tmp/bind_metrics.out | grep -A1 "/statistics/server/counters/counter/@name=$1$" | tail -1 | cut -d= -f2
