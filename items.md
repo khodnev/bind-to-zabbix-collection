@@ -1,13 +1,18 @@
 - opcode:
+```
   - QUERY		Queries received
+```
 
 - rcode:
+```
   - NOERROR		reseived with no errors
   - SERVFAIL		SERVFAIL received
   - NXDOMAIN		NXDOMAIN received
   - REFUSED		REFUSED received
+```
 
 - qtype: and resqtype:
+```
   - A
   - AAAA
   - ANY
@@ -23,8 +28,10 @@
   - SRV 
   - TXT 
   - TYPE65
+```
 
 - nsstat:
+```
   - Requestv4           IPv4 requests received
   - Response            responses sent
   - ReqEdns0            requests with EDNS(0) received
@@ -46,9 +53,10 @@
   - QryUDP              UDP queries received
   - QryTCP              TCP queries received
   - Prefetch            queries triggered prefetch
-
+```
 
 - sockstat:
+```
   - UDP4Open		UDP/IPv4 sockets opened
   - TCP4Open		TCP/IPv4 sockets opened
   - UDP4Close		UDP/IPv4 sockets closed
@@ -58,4 +66,4 @@
   - TCP4Accept		TCP/IPv4 connections accepted
   - UDP4Active		UDP/IPv4 sockets active
   - TCP4Active		TCP/IPv4 sockets active
-
+```
